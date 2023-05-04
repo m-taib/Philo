@@ -7,8 +7,10 @@ void    *philo_routine(void *philo)
 
 	arg = (t_philo *)philo;
 	i = *(arg->i);
-	if (i % 2)
+	if (i % 2 == 1)
 		usleep(100);
+	//printf("%d\n",i);
+	//return NULL;
 	while (1)
 	{
 		if (arg->is_dead)
@@ -38,6 +40,7 @@ void    *philo_routine(void *philo)
 			//usleep(arg->info[time_to_sleep] * 1000);
 		}	
 	}
+	return (NULL);
 }
 
 void	philos_create(t_philo *philo)
@@ -45,10 +48,10 @@ void	philos_create(t_philo *philo)
 	int	i;
 	philo->init_time = get_time();
 	i = -1;
-	philo->eating_time = malloc(sizeof(long) * philo->info[philo_n]);
+	/*philo->eating_time = malloc(sizeof(long) * philo->info[philo_n]);
 	if (!philo->eating_time)
 		return ;
-	while (philo->nb_to_eat && ++i < philo->info[philo_n])
+	*/while (philo->nb_to_eat && ++i < philo->info[philo_n])
 		philo->nb_to_eat[i] = 0;
 	i = -1;
 	while (++i < philo->info[philo_n])
@@ -63,7 +66,7 @@ void	philos_create(t_philo *philo)
 		philo->i = &index;
 		if (pthread_create(&philo->ptr_t[index], NULL, philo_routine, philo))
 			return ;
-		usleep(100);
+		usleep(200);
 	}
 	supervisor(philo);
 }
@@ -91,7 +94,7 @@ void	supervisor(t_philo *philo)
 				return ;
 			}
 		}
-		usleep(50);
+		usleep(100);
 	}
 
 }
@@ -102,13 +105,13 @@ int	init(t_philo *philo)
 	int	j;
 
 	j = -1;
-	philo->ptr_t = malloc(sizeof(pthread_t) * philo->info[philo_n]);
+	/*philo->ptr_t = malloc(sizeof(pthread_t) * philo->info[philo_n]);
 	if (!philo->ptr_t)
 		return (0);
 	philo->ptr_m = malloc(sizeof(pthread_mutex_t) * philo->info[philo_n]);
 	if (!philo->ptr_m)
 		return (0);
-	i = -1;
+	*/i = -1;
 	while (++i < philo->info[philo_n])
 	{
 		if (pthread_mutex_init((&(philo->ptr_m[i])), NULL))
@@ -148,3 +151,4 @@ int	main(int ac, char **av)
 	philos_create(philo);
 	return (0);
 }
+
