@@ -9,7 +9,7 @@
 
 typedef struct philo
 {
-	int	*i;
+	int	 i;
 	int 	*info;
 	int	*nb_to_eat;
 	int	is_dead;
@@ -17,6 +17,12 @@ typedef struct philo
 	long	eating_time[200];
 	pthread_t ptr_t[200];
 	pthread_mutex_t ptr_m[200];
+	pthread_mutex_t *n_of_meals;
+	pthread_mutex_t *n_of_philo;
+	pthread_mutex_t *assign;
+	pthread_mutex_t *dead;
+	pthread_mutex_t *lte;
+
 	
 } t_philo;
 

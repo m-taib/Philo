@@ -16,9 +16,15 @@ long	ft_interval(time_t before, time_t after)
 void	ft_usleep(t_philo *vars, int time)
 {
 	time_t	waiting_until;
+	int dead;
+
+
+	pthread_mutex_lock(vars->dead);
+	dead = vars->is_dead;
+	pthread_mutex_unlock(vars->dead);
 
 	waiting_until = get_time() + time;
-	while (waiting_until > get_time() && !vars->is_dead)
+	while (waiting_until > get_time() && !dead)
 		usleep(50);
 }
 
